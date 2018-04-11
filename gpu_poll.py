@@ -8,13 +8,13 @@
 # The generated key is expected at '~/.credentials/client_secret.json'.
 
 import argparse
+import os
 import io
 import subprocess
-import httplib2
-import os
-import base64
 import time
 
+import httplib2
+import base64
 from apiclient import discovery
 from oauth2client import client
 from oauth2client import tools
