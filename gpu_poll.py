@@ -12,6 +12,7 @@ import os
 import io
 import subprocess
 import time
+import datetime
 
 import httplib2
 import base64
@@ -63,7 +64,7 @@ def createMessage(content, args):
     msg['to'] = args.dest_mail_address
     msg['from'] = "me"
     if args.test_send:
-        msg['subject'] = "Test Mail GPU Detection"
+        msg['subject'] = "Test GPU Detected"
     else:
         msg['subject'] = "Free GPU Detected"
     raw = base64.urlsafe_b64encode(msg.as_bytes())
@@ -91,15 +92,16 @@ def pollAndNotify(service, args):
                 i_start_processes = i
         if i_start_processes != -1:
             n_processes = len(lines) - i_start_processes - 4
-            free = (n_processes < NUM_GPUS)
-            if free or args.test_send:
-                print("Free GPU detected!")
+            free = (n_processes < NUM_GPUS) or args.test_send
+            if free:
+                print("{}: Free GPU detected!".format(time.strftime("%d.%m.%Y, %H:%M:%S", time.localtime())))
                 # Send nvidia-smi output via mail.
                 msg_content = "\n".join(lines)
                 sendNotificationMail(service, msg_content, args)
         else:
             print("ERROR: Line 'Processes:' not found in nvidia-smi output.")
-        time.sleep(POLL_PERIOD_IN_S)
+        if not free:
+            time.sleep(POLL_PERIOD_IN_S)
 
 def main():
     args = parseArgs()
