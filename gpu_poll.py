@@ -26,7 +26,7 @@ NUM_GPUS = 4
 SCOPES = 'https://www.googleapis.com/auth/gmail.send'
 CLIENT_SECRET_FILE = 'client_secret.json'
 APPLICATION_NAME = 'poll_gpu'
-POLL_PERIOD_IN_S = 30
+POLL_PERIOD_IN_S = 60
 
 def parseArgs():
     tools.argparser.add_argument("dest_mail_address", help="mail address to send notification mails to")
