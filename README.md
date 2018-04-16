@@ -9,7 +9,7 @@ This exploits the fact that the polling script stops as soon as a free GPU is de
 
 ## Setup
 In order to use the mail service, you have to generate an authentication key for your Google Mail account.
-This allows the script to send (and only send i. e. not read) mails using this account.
+This allows the script to send (and only send i. e. not read) mails using your account.
 
 1. Goto [your Google Developer Console](https://console.developers.google.com/start/api?id=gmail) and automatically turn on the API. Click Continue, then Go to credentials.
 2. On the Add credentials to your project page, click the Cancel button.
@@ -19,3 +19,14 @@ This allows the script to send (and only send i. e. not read) mails using this a
 6. Click OK to dismiss the resulting dialog.
 7. Click the 'Download JSON' button to the right of the client ID.
 8. Move this file to your working directory and rename it `client_secret.json`.
+
+Install the dependencies:
+```
+pip3 install --user -r requirements.txt
+```
+
+## Execution
+Read the CLI documentation:
+```
+python3 gpu_poll.py --help
+```
