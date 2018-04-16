@@ -13,6 +13,7 @@ import io
 import subprocess
 import time
 import datetime
+import socket
 
 import httplib2
 import base64
@@ -27,6 +28,7 @@ SCOPES = 'https://www.googleapis.com/auth/gmail.send'
 CLIENT_SECRET_FILE = 'client_secret.json'
 APPLICATION_NAME = 'poll_gpu'
 POLL_PERIOD_IN_S = 60
+HOST_NAME = socket.gethostname()
 
 def parseArgs():
     tools.argparser.add_argument("dest_mail_address", help="mail address to send notification mails to")
@@ -63,10 +65,10 @@ def createMessage(content, args):
     msg = MIMEText(content)
     msg['to'] = args.dest_mail_address
     msg['from'] = "me"
+    subject = "Free GPU Detected on '{}'".format(HOST_NAME)
     if args.test_send:
-        msg['subject'] = "Test GPU Detected"
-    else:
-        msg['subject'] = "Free GPU Detected"
+        subject = "(Test) {}".format(subject)
+    msg['subject'] = subject
     raw = base64.urlsafe_b64encode(msg.as_bytes())
     return {'raw': raw.decode()}
 
